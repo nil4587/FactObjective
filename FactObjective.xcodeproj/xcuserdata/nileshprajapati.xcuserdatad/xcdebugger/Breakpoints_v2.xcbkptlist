@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FactObjective/AppViewControllers/FactsListViewController.m"
-            timestampString = "532960614.841039"
+            timestampString = "532965766.008449"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "91"
-            endingLineNumber = "91"
+            startingLineNumber = "94"
+            endingLineNumber = "94"
             landmarkName = "-fetchDataFromJSONFile"
             landmarkType = "7">
             <Locations>
@@ -26,11 +26,11 @@
                   moduleName = "FactObjective"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Volumes/DATA/Nilesh/Demo%20Projects/FactObjective/FactObjective/AppViewControllers/FactsListViewController.m"
-                  timestampString = "532960411.203278"
+                  timestampString = "532965320.074195"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "89"
-                  endingLineNumber = "89"
+                  startingLineNumber = "96"
+                  endingLineNumber = "96"
                   offsetFromSymbolStart = "262">
                </Location>
                <Location
@@ -41,12 +41,12 @@
                   moduleName = "FactObjective"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Volumes/DATA/Nilesh/Demo%20Projects/FactObjective/FactObjective/AppViewControllers/FactsListViewController.m"
-                  timestampString = "532960411.208839"
+                  timestampString = "532965320.079455"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "91"
-                  endingLineNumber = "91"
-                  offsetFromSymbolStart = "127">
+                  startingLineNumber = "96"
+                  endingLineNumber = "96"
+                  offsetFromSymbolStart = "19">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -58,11 +58,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FactObjective/AppViewControllers/FactsListViewController.m"
-            timestampString = "532960614.841621"
+            timestampString = "532965766.008542"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "85"
-            endingLineNumber = "85"
+            startingLineNumber = "88"
+            endingLineNumber = "88"
             landmarkName = "-fetchDataFromJSONFile"
             landmarkType = "7">
          </BreakpointContent>
@@ -74,11 +74,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FactObjective/AppViewControllers/FactsListViewController.m"
-            timestampString = "532960614.842047"
+            timestampString = "532965766.008622"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "111"
-            endingLineNumber = "111"
+            startingLineNumber = "115"
+            endingLineNumber = "115"
             landmarkName = "-fetchDataFromJSONFile"
             landmarkType = "7">
          </BreakpointContent>
@@ -90,44 +90,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FactObjective/AppViewControllers/FactsListViewController.m"
-            timestampString = "532960614.842468"
+            timestampString = "532965766.008698"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "116"
-            endingLineNumber = "116"
+            startingLineNumber = "121"
+            endingLineNumber = "121"
             landmarkName = "-fetchDataFromJSONFile"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "FactObjective/AppCustomControls/Categories/NSString+Additions.m"
-            timestampString = "532960614.84288"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "37"
-            endingLineNumber = "37"
-            landmarkName = "-trim"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "FactObjective/AppCustomControls/Categories/NSString+Additions.m"
-            timestampString = "532960614.842954"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "17"
-            endingLineNumber = "17"
-            landmarkName = "-returnStringAfterValidating"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

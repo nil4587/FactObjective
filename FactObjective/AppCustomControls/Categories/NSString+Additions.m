@@ -36,17 +36,19 @@
 
 -(NSString *)trim
 {
-    NSString *string = [self returnStringAfterValidating];
     if (self) {
-        string = self;
+        NSString *string = self;
+        string  = [string returnStringAfterValidating];
         if ([string length] > 0) {
             string = [string stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         }
         else {
             string = @"";
         }
+        return string;
+    } else {
+        return @"";
     }
-    return string;
 }
 
 @end

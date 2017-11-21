@@ -43,11 +43,6 @@
 #pragma mark ========================================================
 
 #define JSON_FILE_URL @"https://dl.dropboxusercontent.com/s/2iodh4vg0eortkl/facts.json"
-
-//--- RESPONSE CODE
-typedef NS_ENUM(NSInteger, URLRESPONSESTATE) {
-    URLRESPONSESTATESUCESS = 200,
-    URLRESPONSESTATESERVERERROR = 500,
-};
+#define appDelegate   ((AppDelegate *)[[UIApplication sharedApplication]delegate])
 
 #endif /* AppConstant_h */

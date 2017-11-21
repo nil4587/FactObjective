@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		61C965B99A220BD5BEE7A3B9 /* libPods-FactObjectiveUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9492E1EF2DD21D87B69BBA72 /* libPods-FactObjectiveUITests.a */; };
 		AA85AD286A5443829CFA7209 /* libPods-FactObjectiveTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BCAB38632EA2CA03D1D8629F /* libPods-FactObjectiveTests.a */; };
+		C42612A41FC458B500C6D2CE /* NSString+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = C42612A01FC451CE00C6D2CE /* NSString+Additions.m */; };
+		C42612AF1FC4607D00C6D2CE /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C42612A81FC45DBD00C6D2CE /* SystemConfiguration.framework */; };
 		C46B0D751FC429F5004743D9 /* FactObjectiveTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C46B0D741FC429F5004743D9 /* FactObjectiveTests.m */; };
 		C46B0D801FC429F5004743D9 /* FactObjectiveUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = C46B0D7F1FC429F5004743D9 /* FactObjectiveUITests.m */; };
 		C46B0D9E1FC42B06004743D9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C46B0D911FC42B05004743D9 /* Assets.xcassets */; };
@@ -46,8 +48,9 @@
 		BDB4C171B902A16D38A41944 /* Pods-FactObjectiveTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FactObjectiveTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FactObjectiveTests/Pods-FactObjectiveTests.debug.xcconfig"; sourceTree = "<group>"; };
 		C426129F1FC451CE00C6D2CE /* NSString+Additions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSString+Additions.h"; sourceTree = "<group>"; };
 		C42612A01FC451CE00C6D2CE /* NSString+Additions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSString+Additions.m"; sourceTree = "<group>"; };
-		C42612A11FC455B400C6D2CE /* UIImage+Additions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImage+Additions.h"; sourceTree = "<group>"; };
-		C42612A21FC455B400C6D2CE /* UIImage+Additions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Additions.m"; sourceTree = "<group>"; };
+		C42612A81FC45DBD00C6D2CE /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		C42612AA1FC45DCC00C6D2CE /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		C42612AD1FC45F0B00C6D2CE /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		C46B0D581FC429F5004743D9 /* FactObjective.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FactObjective.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C46B0D701FC429F5004743D9 /* FactObjectiveTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FactObjectiveTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C46B0D741FC429F5004743D9 /* FactObjectiveTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FactObjectiveTests.m; sourceTree = "<group>"; };
@@ -71,6 +74,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C42612AF1FC4607D00C6D2CE /* SystemConfiguration.framework in Frameworks */,
 				E2B715CEDCAFD97E788B4E2A /* libPods-FactObjective.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -97,6 +101,9 @@
 		4BEB4510CD64633E5A029DDB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C42612AD1FC45F0B00C6D2CE /* Security.framework */,
+				C42612AA1FC45DCC00C6D2CE /* CFNetwork.framework */,
+				C42612A81FC45DBD00C6D2CE /* SystemConfiguration.framework */,
 				8A9C5FA121325712BDAB8A45 /* libPods-FactObjective.a */,
 				BCAB38632EA2CA03D1D8629F /* libPods-FactObjectiveTests.a */,
 				9492E1EF2DD21D87B69BBA72 /* libPods-FactObjectiveUITests.a */,
@@ -128,8 +135,6 @@
 		C426129E1FC451CE00C6D2CE /* Categories */ = {
 			isa = PBXGroup;
 			children = (
-				C42612A11FC455B400C6D2CE /* UIImage+Additions.h */,
-				C42612A21FC455B400C6D2CE /* UIImage+Additions.m */,
 				C426129F1FC451CE00C6D2CE /* NSString+Additions.h */,
 				C42612A01FC451CE00C6D2CE /* NSString+Additions.m */,
 			);
@@ -219,8 +224,8 @@
 			children = (
 				C46B0D991FC42B05004743D9 /* AppDelegate.h */,
 				C46B0D9A1FC42B05004743D9 /* AppDelegate.m */,
-				C46B0D9B1FC42B05004743D9 /* main.m */,
 				C46B0DA71FC43000004743D9 /* AppConstant.h */,
+				C46B0D9B1FC42B05004743D9 /* main.m */,
 			);
 			path = AppClasses;
 			sourceTree = "<group>";
@@ -519,6 +524,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C42612A41FC458B500C6D2CE /* NSString+Additions.m in Sources */,
 				C46B0DA61FC42C9C004743D9 /* FactsListViewController.m in Sources */,
 				C46B0DA21FC42B06004743D9 /* AppDelegate.m in Sources */,
 				C46B0DA31FC42B06004743D9 /* main.m in Sources */,
@@ -610,6 +616,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = "";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -660,6 +667,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/FactObjective/AppResources/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -676,6 +684,14 @@
 				INFOPLIST_FILE = "$(SRCROOT)/FactObjective/AppResources/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-l\"SDWebImage\"",
+					"-framework",
+					"\"ImageIO\"",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.info.FactObjective;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -694,6 +710,14 @@
 				INFOPLIST_FILE = "$(SRCROOT)/FactObjective/AppResources/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-l\"SDWebImage\"",
+					"-framework",
+					"\"ImageIO\"",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.info.FactObjective;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
