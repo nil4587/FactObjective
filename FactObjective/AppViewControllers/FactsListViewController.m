@@ -77,8 +77,10 @@
 
 - (void)fetchDataFromJSONFile {
     
-    //-- To show the network indicator until the process is running.
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        //-- To show the network indicator until the process is running.
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+    });
     
     //-- Search Query preparation
     NSCharacterSet *expectedCharSet = [NSCharacterSet URLQueryAllowedCharacterSet];
