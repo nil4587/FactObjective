@@ -8,6 +8,7 @@
 
 #import "FactsListViewController.h"
 #import "AppConstant.h"
+#import "NSString+Additions.h"
 
 @interface FactsListViewController ()
 @property(strong, nonatomic) UIRefreshControl *refreshControler;
@@ -43,6 +44,8 @@
     //-- NavigationBar right bar item
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(btnRefreshClicked:)];
     
+    self.title = @"Loading...";
+    
     //-- Fetch JSON data from url
     [self fetchDataFromJSONFile];
 }
@@ -70,6 +73,10 @@
 #pragma mark ==================================
 
 - (void)fetchDataFromJSONFile {
+    
+    //-- To show the network indicator until the process is running.
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+    
     //-- Search Query preparation
     NSCharacterSet *expectedCharSet = [NSCharacterSet URLQueryAllowedCharacterSet];
     NSString *urlString = [JSON_FILE_URL stringByAddingPercentEncodingWithAllowedCharacters:expectedCharSet];
@@ -82,6 +89,11 @@
     
     //-- Make a web-service call to fetch a data from predefined url request.
     [NSURLConnection sendAsynchronousRequest:urlRequest queue:[NSOperationQueue new] completionHandler:^(NSURLResponse * _Nullable response, NSData * _Nullable data, NSError * _Nullable connectionError) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            //-- To hide the network indicator once the response is availble.
+            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+        });
+        
         if (((NSHTTPURLResponse *)response).statusCode == 200) {
             if (data != nil) {
                 //-- As becuase downaloded data contains special characters first of all we have to conver it into String format.
@@ -90,7 +102,7 @@
                 //-- Now create a data from String content with the help of UTF8Encoding
                 NSData *jsonData = [latinString dataUsingEncoding:NSUTF8StringEncoding];
                 
-                if (latingString != nil && jsonData != nil) {
+                if (latinString != nil && jsonData != nil) {
                     NSError *error = nil;
                     //-- Fetch key-value pair object from a JSON data
                     NSDictionary *dictInfo = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableLeaves error:&error];
@@ -100,6 +112,16 @@
                         NSLog(@"JSON Parsing Error due to : %@", [error localizedDescription]);
                     } else {
                         NSLog(@"%@", [dictInfo description]);
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            self.title = dictInfo[@"title"];
+                            _arrFacts = [NSArray arrayWithArray:dictInfo[@"rows"]];
+                            if (_arrFacts != nil) {
+                                self.tableView.hidden = NO;
+                                [self.tableView reloadData];
+                            } else {
+                                self.tableView.hidden = YES;
+                            }
+                        });
                     }
                 } else {
                     NSLog(@"An error while encoding data or string conents.");
@@ -130,13 +152,26 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"reuseIdentifier" forIndexPath:indexPath];
-    if (cell == nil) {
-      
-    }
     // Configure the cell...
-    
-    return cell;
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"reuseIdentifier"];
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"reuseIdentifier"];
+        cell.detailTextLabel.numberOfLines = 0;
+        cell.detailTextLabel.textColor = [UIColor lightGrayColor];
+        cell.imageView.contentMode = UIViewContentModeScaleAspectFit;
+    }
+    @try {
+        NSDictionary *dictFactInfo = [_arrFacts objectAtIndex:indexPath.row];
+        NSString *title = [NSString stringWithFormat:@"%@",dictFactInfo[@"title"]];
+        cell.textLabel.text = title;
+        NSString *description = [NSString stringWithFormat:@"%@",dictFactInfo[@"description"]];
+        cell.detailTextLabel.text = description;
+        cell.imageView.image = nil;
+    } @catch (NSException *exception) {
+        NSLog(@"An exception occurred due to %@", exception.reason);
+    } @finally {
+        return cell;
+    }
 }
 
 
