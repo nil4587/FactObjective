@@ -35,9 +35,16 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
+    
     //-- Tableview's row height & estimated row height
     self.tableView.rowHeight = UITableViewAutomaticDimension;
-    self.tableView.estimatedRowHeight = 65.0;
+    if ([[UIDevice currentDevice].model isEqualToString:@"iPad"] || [[UIDevice currentDevice].model isEqualToString:@"ipad"]) {
+        self.tableView.estimatedRowHeight = 110.0;
+    } else {
+        self.tableView.estimatedRowHeight = 65.0;
+    }
+    self.tableView.tableFooterView = [UIView new];
     
     //-- Tableview's pull to refresh control
     _refreshControler = [[UIRefreshControl alloc] init];
@@ -50,12 +57,9 @@
     
     //-- NavigationBar right bar item
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(btnRefreshClicked:)];
-    
-    //-- Set title for very first time on each launch until data downloaded.
-    self.title = @"Loading...";
-    
+
     //-- Fetch JSON data from url
-    [self fetchDataFromJSONFile];
+    //[self fetchDataFromJSONFile];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -84,6 +88,8 @@
     //-- Cancel the previous operation prior starting a new operation
     if (_connection) {
         [_connection cancel];
+        //-- Un-Schedule the run loop for connection
+        [_connection unscheduleFromRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
         _connection = nil;
     }
 }
@@ -252,17 +258,21 @@
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
+    //-- Create mutable data once the response received.
     if (!_data) {
         _data = [[NSMutableData alloc] init];
     }
+    //-- Cache the response object for later use in ConnectionDidFinishLoading.
+    _response = response;
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
+    //-- Append the data received from server.
     [_data appendData:data];
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
-    if (_data) {
+    if (_response && ((NSHTTPURLResponse *)_response).statusCode == 200) {
         //-- As becuase downaloded data contains special characters first of all we have to conver it into String format.
         NSString *latinString = [[NSString alloc] initWithData:_data encoding:NSISOLatin1StringEncoding];
         
@@ -282,23 +292,32 @@
                 NSLog(@"%@", [dictInfo description]);
                 dispatch_async(dispatch_get_main_queue(), ^{
                     self.title = dictInfo[@"title"];
+                    if (_arrFacts) {
+                        _arrFacts = nil;
+                    }
                     _arrFacts = [NSArray arrayWithArray:dictInfo[@"rows"]];
                     if (_arrFacts != nil) {
                         self.tableView.hidden = NO;
-                        [self.tableView reloadData];
                     } else {
                         self.tableView.hidden = YES;
                     }
+                    [self.tableView reloadData];
                 });
             }
         } else {
             self.title = @"";
-            [appDelegate displayAnAlertWith:@"Alert !!" andMessage:@"An error while encoding data or string conents."];
+            [appDelegate displayAnAlertWith:@"Alert !!" andMessage:@"An error while manipulating data or string conents."];
         }
         _data = nil;
     } else {
         self.title = @"";
-        [appDelegate displayAnAlertWith:@"Alert !!" andMessage:@"No data available to download or an error while downloading a data."];
+        if (_data) {
+            //-- As becuase downaloded data, first of all, we have to convert it into String format.
+            NSString *errorMessage = [[NSString alloc] initWithData:_data encoding:NSUTF8StringEncoding];
+            [appDelegate displayAnAlertWith:@"Alert !!" andMessage:errorMessage];
+        } else {
+            [appDelegate displayAnAlertWith:@"Alert !!" andMessage:@"No data available to download or an error while downloading a data."];
+        }
     }
     dispatch_async(dispatch_get_main_queue(), ^{
         //-- To hide the network indicator once the response is availble.
@@ -318,56 +337,99 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (_arrFacts != nil) {
+    if (_arrFacts) {
         return _arrFacts.count;
     } else {
-        return 0;
+        return 1;
+    }
+}
+
+- (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return UITableViewAutomaticDimension;
+}
+
+- (CGFloat) tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if ([[UIDevice currentDevice].model isEqualToString:@"iPad"] || [[UIDevice currentDevice].model isEqualToString:@"ipad"]) {
+        return 110.0;
+    } else {
+        return 65.0;
     }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     //-- Reuse the cell with the identifier.
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"reuseIdentifier"];
+    static NSString *reuseIdentifier = @"reuseIdentifier";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifier];
     if (cell == nil) {
         //-- Configure the cell if not available
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"reuseIdentifier"];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:reuseIdentifier];
         cell.detailTextLabel.numberOfLines = 0;
         cell.detailTextLabel.textColor = [UIColor lightGrayColor];
         cell.imageView.contentMode = UIViewContentModeScaleAspectFit;
+        if ([[UIDevice currentDevice].model isEqualToString:@"iPad"] || [[UIDevice currentDevice].model isEqualToString:@"ipad"]) {
+            cell.detailTextLabel.font = [UIFont fontWithName:cell.detailTextLabel.font.familyName size:cell.detailTextLabel.font.pointSize + 8.0];
+            cell.textLabel.font = [UIFont fontWithName:cell.textLabel.font.familyName size:cell.textLabel.font.pointSize + 8.0];
+        }
     }
     @try {
-        //-- To fetch the object based on index
-        NSDictionary *dictFactInfo = [_arrFacts objectAtIndex:indexPath.row];
-        
-        //-- To display the title text
-        NSString *title = [NSString stringWithFormat:@"%@",dictFactInfo[@"title"]];
-        if ([[title trim] length] > 0) {
-            cell.textLabel.text = title;
+        if (_arrFacts) {
+            //-- To fetch the object based on index
+            NSDictionary *dictFactInfo = [_arrFacts objectAtIndex:indexPath.row];
+            
+            //-- To display the title text
+            NSString *title = [NSString stringWithFormat:@"%@",dictFactInfo[@"title"]];
+            if ([[title trim] length] > 0) {
+                cell.textLabel.text = title;
+            } else {
+                cell.textLabel.text = @"No title available for this row.";
+            }
+            
+            //-- To display the description text
+            NSString *description = [NSString stringWithFormat:@"%@",dictFactInfo[@"description"]];
+            if ([[description trim] length] > 0) {
+                cell.detailTextLabel.text = description;
+            } else {
+                cell.detailTextLabel.text = @"No description available for this row.";
+            }
+            
+            //-- To display the image in asynchronously manner to avoid the user interaction conflict.
+            NSString *imagurlstring = [NSString stringWithFormat:@"%@",dictFactInfo[@"imageHref"]];
+            if ([[imagurlstring trim] length] > 0) {
+                NSURL *imageurl = [NSURL URLWithString:[imagurlstring trim]];
+                __unsafe_unretained __typeof(cell)weakCell = cell;
+                /*
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+                    NSData *imageData = [NSData dataWithContentsOfURL:imageurl];
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        if (imageData) {
+                            weakCell.imageView.image = [self imageWithImage:[UIImage imageWithData:imageData] scaledToSize:CGSizeMake(60.0, 60.0)];
+                        } else {
+                            weakCell.imageView.image = nil;
+                        }
+                        [weakCell layoutSubviews];
+                        [weakCell setNeedsLayout];
+                    });
+                });*/
+                
+                [cell.imageView sd_setImageWithURL:imageurl completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+                    if (image) {
+                        //-- Resize the image and display it in the row.
+                        if ([[UIDevice currentDevice].model isEqualToString:@"iPad"] || [[UIDevice currentDevice].model isEqualToString:@"ipad"]) {
+                            weakCell.imageView.image = [self imageWithImage:image scaledToSize:CGSizeMake(100.0, 100.0)];
+                        } else {
+                            weakCell.imageView.image = [self imageWithImage:image scaledToSize:CGSizeMake(60.0, 60.0)];
+                        }
+                    } else {
+                        weakCell.imageView.image = nil;
+                    }
+                    [weakCell layoutSubviews];
+                    [weakCell setNeedsLayout];
+                }];
+            } else {
+                cell.imageView.image = nil;
+            }
         } else {
-            cell.textLabel.text = @"No title available for this row.";
-        }
-        
-        //-- To display the description text
-        NSString *description = [NSString stringWithFormat:@"%@",dictFactInfo[@"description"]];
-        if ([[description trim] length] > 0) {
-            cell.detailTextLabel.text = description;
-        } else {
-            cell.detailTextLabel.text = @"No description available for this row.";
-        }
-        
-        //-- To display the image in asynchronously manner to avoid the user interaction conflict.
-        NSString *imagurl = [NSString stringWithFormat:@"%@",dictFactInfo[@"imageHref"]];
-        if ([[imagurl trim] length] > 0) {
-            [cell.imageView sd_setImageWithURL:[NSURL URLWithString:imagurl] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
-                if (image != nil) {
-                    //-- Resize the image and display it in the row.
-                    cell.imageView.image = [self imageWithImage:image scaledToSize:CGSizeMake(60.0, 60.0)];
-                } else {
-                    cell.imageView.image = nil;
-                }
-            }];
-        } else {
-            cell.imageView.image = nil;
+            cell.detailTextLabel.text = @"Click on Refresh icon or \"Pull to Refresh\" to fetch the data from server.";
         }
     } @catch (NSException *exception) {
         NSLog(@"An exception occurred due to %@", exception.reason);
