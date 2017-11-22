@@ -5,7 +5,7 @@ The purpose of this exercise is to assess candidate developer ’ s iOS coding k
 
 Specification :
 Create a universal iOS app which:: 
-1. Ing ests a json feed from https::////ddl..ddropboxusercontent..ccom//ss//22iodh4vg0eortkl//ffacts..jjson 
+1. Ing ests a json feed from https://dl.dropboxusercontent.com/s/2iodh4vg0eortkl/facts.json
 2. You can use a third party j son parser to parse this if desired.. 
 3. The feed contains a title and a list of rows 
 4. Displays the content (iincluding image,, title and description)) in a table 
@@ -29,7 +29,7 @@ Guidelines :
 9. Commit your changes to git in small chunks with meaningful comments 
 10. Don’t use any singletons in your submission 
 
-Additional Requirements 
+Additional Requirements :
 1. Style your code according to this s tyle guide https::////ggithub..ccom//NNYTimes//oobjective - c - style - guide 
 2. Use programmatic auto layout to layout the cells in the app 
 3. Support all iOS versions from the latest back to iOS8 
