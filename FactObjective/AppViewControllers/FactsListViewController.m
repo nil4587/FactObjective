@@ -111,54 +111,6 @@
         [self.tableView reloadData];
     });
 }
-/*
-#pragma mark - ==================================
-#pragma mark User-defined methods
-#pragma mark ==================================
-
-- (void)resetProperties {
-    //-- Remove the old data prior making a web-service call
-    _data = nil;
-    //-- Remove the old response prior making a web-service call
-    _response = nil;
-    //-- Cancel the previous operation prior starting a new operation
-    if (_connection) {
-        [_connection cancel];
-        //-- Un-Schedule the run loop for connection
-        [_connection unscheduleFromRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
-        _connection = nil;
-    }
-}
-
-- (UIImage *)imageWithImage:(UIImage *)image scaledToSize:(CGSize)newSize {
-    //UIGraphicsBeginImageContext(newSize);
-    // In next line, pass 0.0 to use the current device's pixel scaling factor (and thus account for Retina resolution).
-    // Pass 1.0 to force exact pixel size.
-    
-    CGSize size = image.size;
-    
-    CGFloat widthRatio  = newSize.width  / image.size.width;
-    CGFloat heightRatio = newSize.height / image.size.height;
-    
-    // Figure out what our orientation is, and use that to form the rectangle
-    if(widthRatio > heightRatio) {
-        newSize = CGSizeMake(size.width * heightRatio, size.height * heightRatio);
-    } else {
-        newSize = CGSizeMake(size.width * widthRatio,  size.height * widthRatio);
-    }
-    
-    // This is the rect that we've calculated out and this is what is actually used below
-    CGRect rect = CGRectMake(0, 0, newSize.width, newSize.height);
-    
-    // Actually do the resizing to the rect using the ImageContext stuff
-    UIGraphicsBeginImageContextWithOptions(newSize, NO, 0.0);
-    [image drawInRect:rect];
-    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    
-    return newImage;
-}
-*/
 
 #pragma mark - ==================================
 #pragma mark Controls click events
