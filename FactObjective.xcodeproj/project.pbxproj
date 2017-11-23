@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		61C965B99A220BD5BEE7A3B9 /* libPods-FactObjectiveUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9492E1EF2DD21D87B69BBA72 /* libPods-FactObjectiveUITests.a */; };
 		AA85AD286A5443829CFA7209 /* libPods-FactObjectiveTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BCAB38632EA2CA03D1D8629F /* libPods-FactObjectiveTests.a */; };
+		C418F4731FC6E62B00AD24A8 /* TableViewDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = C418F4721FC6E62B00AD24A8 /* TableViewDataSource.m */; };
+		C418F4761FC6E63900AD24A8 /* TableViewDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C418F4751FC6E63900AD24A8 /* TableViewDelegate.m */; };
+		C418F47D1FC6EC1000AD24A8 /* FactsController.m in Sources */ = {isa = PBXBuildFile; fileRef = C418F47C1FC6EC1000AD24A8 /* FactsController.m */; };
+		C418F4801FC6FFBC00AD24A8 /* Fact.m in Sources */ = {isa = PBXBuildFile; fileRef = C418F47F1FC6FFBC00AD24A8 /* Fact.m */; };
 		C42612A41FC458B500C6D2CE /* NSString+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = C42612A01FC451CE00C6D2CE /* NSString+Additions.m */; };
 		C42612AF1FC4607D00C6D2CE /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C42612A81FC45DBD00C6D2CE /* SystemConfiguration.framework */; };
 		C46B0D751FC429F5004743D9 /* FactObjectiveTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C46B0D741FC429F5004743D9 /* FactObjectiveTests.m */; };
@@ -46,6 +50,14 @@
 		A7B554B5D0ADD326DAB2C293 /* Pods-FactObjectiveTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FactObjectiveTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-FactObjectiveTests/Pods-FactObjectiveTests.release.xcconfig"; sourceTree = "<group>"; };
 		BCAB38632EA2CA03D1D8629F /* libPods-FactObjectiveTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-FactObjectiveTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BDB4C171B902A16D38A41944 /* Pods-FactObjectiveTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FactObjectiveTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FactObjectiveTests/Pods-FactObjectiveTests.debug.xcconfig"; sourceTree = "<group>"; };
+		C418F4711FC6E62B00AD24A8 /* TableViewDataSource.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TableViewDataSource.h; sourceTree = "<group>"; };
+		C418F4721FC6E62B00AD24A8 /* TableViewDataSource.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TableViewDataSource.m; sourceTree = "<group>"; };
+		C418F4741FC6E63900AD24A8 /* TableViewDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TableViewDelegate.h; sourceTree = "<group>"; };
+		C418F4751FC6E63900AD24A8 /* TableViewDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TableViewDelegate.m; sourceTree = "<group>"; };
+		C418F47B1FC6EC1000AD24A8 /* FactsController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FactsController.h; sourceTree = "<group>"; };
+		C418F47C1FC6EC1000AD24A8 /* FactsController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FactsController.m; sourceTree = "<group>"; };
+		C418F47E1FC6FFBC00AD24A8 /* Fact.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Fact.h; sourceTree = "<group>"; };
+		C418F47F1FC6FFBC00AD24A8 /* Fact.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Fact.m; sourceTree = "<group>"; };
 		C426129F1FC451CE00C6D2CE /* NSString+Additions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSString+Additions.h"; sourceTree = "<group>"; };
 		C42612A01FC451CE00C6D2CE /* NSString+Additions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSString+Additions.m"; sourceTree = "<group>"; };
 		C42612A81FC45DBD00C6D2CE /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -124,6 +136,19 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		C418F46D1FC6E5B500AD24A8 /* AppModels */ = {
+			isa = PBXGroup;
+			children = (
+				C418F4711FC6E62B00AD24A8 /* TableViewDataSource.h */,
+				C418F4721FC6E62B00AD24A8 /* TableViewDataSource.m */,
+				C418F4741FC6E63900AD24A8 /* TableViewDelegate.h */,
+				C418F4751FC6E63900AD24A8 /* TableViewDelegate.m */,
+				C418F47E1FC6FFBC00AD24A8 /* Fact.h */,
+				C418F47F1FC6FFBC00AD24A8 /* Fact.m */,
+			);
+			path = AppModels;
+			sourceTree = "<group>";
+		};
 		C426129D1FC451CE00C6D2CE /* AppCustomControls */ = {
 			isa = PBXGroup;
 			children = (
@@ -166,6 +191,7 @@
 		C46B0D5A1FC429F5004743D9 /* FactObjective */ = {
 			isa = PBXGroup;
 			children = (
+				C418F46D1FC6E5B500AD24A8 /* AppModels */,
 				C426129D1FC451CE00C6D2CE /* AppCustomControls */,
 				C46B0D901FC42B05004743D9 /* AppResources */,
 				C46B0D8D1FC42B05004743D9 /* AppViewControllers */,
@@ -197,6 +223,8 @@
 			children = (
 				C46B0DA41FC42C9C004743D9 /* FactsListViewController.h */,
 				C46B0DA51FC42C9C004743D9 /* FactsListViewController.m */,
+				C418F47B1FC6EC1000AD24A8 /* FactsController.h */,
+				C418F47C1FC6EC1000AD24A8 /* FactsController.m */,
 			);
 			path = AppViewControllers;
 			sourceTree = "<group>";
@@ -510,8 +538,12 @@
 			files = (
 				C42612A41FC458B500C6D2CE /* NSString+Additions.m in Sources */,
 				C46B0DA61FC42C9C004743D9 /* FactsListViewController.m in Sources */,
+				C418F4761FC6E63900AD24A8 /* TableViewDelegate.m in Sources */,
+				C418F47D1FC6EC1000AD24A8 /* FactsController.m in Sources */,
 				C46B0DA21FC42B06004743D9 /* AppDelegate.m in Sources */,
 				C46B0DA31FC42B06004743D9 /* main.m in Sources */,
+				C418F4731FC6E62B00AD24A8 /* TableViewDataSource.m in Sources */,
+				C418F4801FC6FFBC00AD24A8 /* Fact.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

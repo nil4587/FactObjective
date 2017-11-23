@@ -8,25 +8,24 @@
 
 #import "FactsListViewController.h"
 #import "AppConstant.h"
-#import "NSString+Additions.h"
-#import <SDWebImage/UIImageView+WebCache.h>
 #import "AppDelegate.h"
+#import "TableViewDataSource.h"
+#import "TableViewDelegate.h"
+#import "FactsController.h"
 
 //-- Private declaration properties
 @interface FactsListViewController ()
 @property(strong, nonatomic) UIRefreshControl *refreshControler;
-@property(strong, nonatomic) NSURLConnection *connection;
-@property(strong, nonatomic) NSArray *arrFacts;
-@property(strong, nonatomic) NSMutableData *data;
-@property(strong, nonatomic) NSURLResponse *response;
+@property(strong, nonatomic) TableViewDataSource *tableviewDatasource;
+@property(strong, nonatomic) TableViewDelegate *tableviewDelegate;
+@property(strong, nonatomic) FactsController *factController;
 @end
 
 @implementation FactsListViewController
 @synthesize refreshControler = _refreshControler;
-@synthesize arrFacts = _arrFacts;
-@synthesize connection = _connection;
-@synthesize data = _data;
-@synthesize response = _response;
+@synthesize factController = _factController;
+@synthesize tableviewDatasource = _tableviewDatasource;
+@synthesize tableviewDelegate = _tableviewDelegate;
 
 #pragma mark - ==================================
 #pragma mark View Life-cycle
@@ -35,8 +34,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    //-- Change status bar style
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
     
+    //-- NavigationBar right bar item
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(btnRefreshClicked:)];
+
     //-- Tableview's row height & estimated row height
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     if ([[UIDevice currentDevice].model isEqualToString:@"iPad"] || [[UIDevice currentDevice].model isEqualToString:@"ipad"]) {
@@ -55,11 +58,20 @@
     }
     [_refreshControler addTarget:self action:@selector(pullToRefresh:) forControlEvents:UIControlEventValueChanged];
     
-    //-- NavigationBar right bar item
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(btnRefreshClicked:)];
+    //-- Intiate the controller
+    FactsController *obj_factController = [[FactsController alloc] init];
+    obj_factController.delegate = (id)self;
+    self.factController = obj_factController; //-- Assign a controller
+    obj_factController = nil;
+    
+    //-- Initiate the datasource for table view & integrate datesource methods with the help of FactController
+    _tableviewDatasource = [[TableViewDataSource alloc] initTableView:self.tableView withViewController:self.factController];
+    //-- Initiate the delegate for table view & integrate delegate methods with the help of FactController
+    _tableviewDelegate = [[TableViewDelegate alloc] initTableView:self.tableView withViewController:self.factController];
+}
 
-    //-- Fetch JSON data from url
-    //[self fetchDataFromJSONFile];
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -68,14 +80,38 @@
 }
 
 -(void) dealloc {
-    //-- To reset the web-service related values
-    [self resetProperties];
-    if (_arrFacts) {
-        _arrFacts = nil;
-    }
     _refreshControler = nil;
 }
 
+#pragma mark - ==================================
+#pragma mark FactController Delegate methods
+#pragma mark ==================================
+
+- (void)connectionDidReceiveFailure:(NSString *)error {
+    self.title = @"";
+    [appDelegate displayAnAlertWith:@"Alert !!" andMessage:error];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        //-- To hide the network indicator once the response is availble.
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+        [_refreshControler endRefreshing];
+    });
+}
+
+- (void)connectionDidFinishLoading:(NSDictionary *)dictResponseInfo {
+    self.title = dictResponseInfo[@"title"];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        //-- To hide the network indicator once the response is availble.
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+        [_refreshControler endRefreshing];
+        if (self.factController.arrFacts != nil && self.factController.arrFacts.count > 0) {
+            self.tableView.hidden = NO;
+        } else {
+            self.tableView.hidden = YES;
+        }
+        [self.tableView reloadData];
+    });
+}
+/*
 #pragma mark - ==================================
 #pragma mark User-defined methods
 #pragma mark ==================================
@@ -122,21 +158,30 @@
     
     return newImage;
 }
+*/
 
 #pragma mark - ==================================
 #pragma mark Controls click events
 #pragma mark ==================================
 
 - (IBAction)btnRefreshClicked:(id)sender {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        //-- To show the network indicator until the process is running.
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+    });
     [_refreshControler endRefreshing];
-    [self fetchDataFromJSONFile];
+    [self.factController fetchDataFromJSONFile];
 }
 
 - (IBAction)pullToRefresh:(id)sender {
     [_refreshControler beginRefreshing];
-    [self fetchDataFromJSONFile];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        //-- To show the network indicator until the process is running.
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+    });
+    [self.factController fetchDataFromJSONFile];
 }
-
+/*
 #pragma mark - ==================================
 #pragma mark Web-service call
 #pragma mark ==================================
@@ -351,5 +396,5 @@
         return cell;
     }
 }
-
+*/
 @end
