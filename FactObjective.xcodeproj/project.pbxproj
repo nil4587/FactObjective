@@ -167,10 +167,8 @@
 			isa = PBXGroup;
 			children = (
 				C426129D1FC451CE00C6D2CE /* AppCustomControls */,
-				C46B0D9C1FC42B05004743D9 /* AppModels */,
 				C46B0D901FC42B05004743D9 /* AppResources */,
 				C46B0D8D1FC42B05004743D9 /* AppViewControllers */,
-				C46B0D931FC42B05004743D9 /* AppViews */,
 				C46B0D981FC42B05004743D9 /* AppClasses */,
 			);
 			path = FactObjective;
@@ -212,13 +210,6 @@
 			path = AppResources;
 			sourceTree = "<group>";
 		};
-		C46B0D931FC42B05004743D9 /* AppViews */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = AppViews;
-			sourceTree = "<group>";
-		};
 		C46B0D981FC42B05004743D9 /* AppClasses */ = {
 			isa = PBXGroup;
 			children = (
@@ -228,13 +219,6 @@
 				C46B0D9B1FC42B05004743D9 /* main.m */,
 			);
 			path = AppClasses;
-			sourceTree = "<group>";
-		};
-		C46B0D9C1FC42B05004743D9 /* AppModels */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = AppModels;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

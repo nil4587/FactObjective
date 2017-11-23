@@ -169,78 +169,6 @@
     [_connection start];
 }
 
-/*
-- (void)fetchDataFromJSONFile {
-    
-    dispatch_async(dispatch_get_main_queue(), ^{
-        //-- To show the network indicator until the process is running.
-        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-    });
-    
-    //-- Search Query preparation
-    NSCharacterSet *expectedCharSet = [NSCharacterSet URLQueryAllowedCharacterSet];
-    NSString *urlString = [JSON_FILE_URL stringByAddingPercentEncodingWithAllowedCharacters:expectedCharSet];
-    
-    //-- Preparing a url from predefined link string.
-    NSURL *url = [[NSURL alloc] initWithString:urlString];
-    
-    //-- A url request to fetch data in asynchronous manner.
-    NSURLRequest *urlRequest = [[NSURLRequest alloc] initWithURL:url];
-    
-    //-- Make a web-service call to fetch a data from predefined url request.
-    [NSURLConnection sendAsynchronousRequest:urlRequest queue:[NSOperationQueue new] completionHandler:^(NSURLResponse * _Nullable response, NSData * _Nullable data, NSError * _Nullable connectionError) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            //-- To hide the network indicator once the response is availble.
-            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-            [_refreshControler endRefreshing];
-        });
-        
-        if (((NSHTTPURLResponse *)response).statusCode == 200) {
-            if (data != nil) {
-                //-- As becuase downaloded data contains special characters first of all we have to conver it into String format.
-                NSString *latinString = [[NSString alloc] initWithData:data encoding:NSISOLatin1StringEncoding];
-                
-                //-- Now create a data from String content with the help of UTF8Encoding
-                NSData *jsonData = [latinString dataUsingEncoding:NSUTF8StringEncoding];
-                
-                if (latinString != nil && jsonData != nil) {
-                    NSError *error = nil;
-                    //-- Fetch key-value pair object from a JSON data
-                    NSDictionary *dictInfo = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableLeaves error:&error];
-                    
-                    //-- Display an error if you get at the time of converting a JSON data to an object.
-                    if (error != nil) {
-                        self.title = @"";
-                        [appDelegate displayAnAlertWith:@"Alert !!" andMessage:[NSString stringWithFormat:@"JSON Parsing Error due to : %@", [error localizedDescription]]];
-                    } else {
-                        NSLog(@"%@", [dictInfo description]);
-                        dispatch_async(dispatch_get_main_queue(), ^{
-                            self.title = dictInfo[@"title"];
-                            _arrFacts = [NSArray arrayWithArray:dictInfo[@"rows"]];
-                            if (_arrFacts != nil) {
-                                self.tableView.hidden = NO;
-                                [self.tableView reloadData];
-                            } else {
-                                self.tableView.hidden = YES;
-                            }
-                        });
-                    }
-                } else {
-                    self.title = @"";
-                    [appDelegate displayAnAlertWith:@"Alert !!" andMessage:@"An error while encoding data or string conents."];
-                }
-            } else {
-                self.title = @"";
-                [appDelegate displayAnAlertWith:@"Alert !!" andMessage:@"No data available to download or an error while downloading a data."];
-            }
-        } else {
-            self.title = @"";
-            [appDelegate displayAnAlertWith:@"Alert !!" andMessage:[connectionError localizedDescription]];
-        }
-    }];
-}
-*/
-
 #pragma mark - ==================================
 #pragma mark NSURLConnection delegate functions
 #pragma mark ==================================
@@ -397,20 +325,6 @@
             if ([[imagurlstring trim] length] > 0) {
                 NSURL *imageurl = [NSURL URLWithString:[imagurlstring trim]];
                 __unsafe_unretained __typeof(cell)weakCell = cell;
-                /*
-                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-                    NSData *imageData = [NSData dataWithContentsOfURL:imageurl];
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        if (imageData) {
-                            weakCell.imageView.image = [self imageWithImage:[UIImage imageWithData:imageData] scaledToSize:CGSizeMake(60.0, 60.0)];
-                        } else {
-                            weakCell.imageView.image = nil;
-                        }
-                        [weakCell layoutSubviews];
-                        [weakCell setNeedsLayout];
-                    });
-                });*/
-                
                 [cell.imageView sd_setImageWithURL:imageurl completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
                     if (image) {
                         //-- Resize the image and display it in the row.
@@ -437,15 +351,5 @@
         return cell;
     }
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
