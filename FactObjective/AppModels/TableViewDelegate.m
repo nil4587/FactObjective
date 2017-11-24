@@ -34,6 +34,7 @@
 #pragma mark Table view delegate method
 #pragma mark ==================================
 
+//-- A delegate method of a tableview which called while clicking on table's row.
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:TRUE];
 }

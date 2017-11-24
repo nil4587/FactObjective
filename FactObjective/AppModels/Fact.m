@@ -13,6 +13,7 @@
 @synthesize descr = _descr;
 @synthesize imageHref = _imageHref;
 
+//-- A method to convert the JSON/dictionary value to object model.
 - (id)initObjectWithDictionary:(NSDictionary *)dictInfo {
     if (self == [super init]) {
         _title = dictInfo[@"title"];

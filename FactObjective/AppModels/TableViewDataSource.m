@@ -21,6 +21,7 @@
 #pragma mark Initial methods for alloc & dealloc
 #pragma mark ==================================
 
+//-- Initialize method
 - (id)initTableView:(UITableView *)tableView withViewController:(FactsController *)controller {
     if (self == [super init]) {
         _factsController = controller;
@@ -37,6 +38,7 @@
 #pragma mark Table view data source
 #pragma mark ==================================
 
+//-- A method to display contents in a tableview's cell.
 - (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
     //-- Reuse the cell with the identifier.
     static NSString *reuseIdentifier = @"reuseIdentifier";
@@ -86,6 +88,7 @@
                     } else {
                         weakCell.imageView.image = nil;
                     }
+                    //-- To size the cell as after loading image asynchronously
                     [weakCell layoutSubviews];
                     [weakCell setNeedsLayout];
                 }];
@@ -93,6 +96,7 @@
                 cell.imageView.image = nil;
             }
         } else {
+            //-- Static text while there's nothing to display in table's list.
             cell.detailTextLabel.text = @"Click on Refresh icon or \"Pull to Refresh\" to fetch the data from server.";
         }
     } @catch (NSException *exception) {
@@ -102,6 +106,7 @@
     }
 }
 
+//-- A method to deliver the number of rows in a single section.
 - (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (_factsController.arrFacts.count > 0) {
         return _factsController.arrFacts.count;
@@ -114,6 +119,7 @@
 #pragma mark User-defined methods
 #pragma mark ==================================
 
+//-- A method to resize the image before display in a tableview' cell
 - (UIImage *)imageWithImage:(UIImage *)image scaledToSize:(CGSize)newSize {
     //UIGraphicsBeginImageContext(newSize);
     // In next line, pass 0.0 to use the current device's pixel scaling factor (and thus account for Retina resolution).
